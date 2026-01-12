@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/382474715181360815/a411bed6824c4631b901662d9d79d685/artifacts
+end_time: 1768239449078
+entry_point_name: ''
+experiment_id: '382474715181360815'
+lifecycle_stage: active
+run_id: a411bed6824c4631b901662d9d79d685
+run_name: luminous-lark-974
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1768239446940
+status: 3
+tags: []
+user_id: root

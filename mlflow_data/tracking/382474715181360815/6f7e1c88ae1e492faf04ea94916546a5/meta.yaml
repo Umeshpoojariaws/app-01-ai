@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/382474715181360815/6f7e1c88ae1e492faf04ea94916546a5/artifacts
+end_time: 1768237892226
+entry_point_name: ''
+experiment_id: '382474715181360815'
+lifecycle_stage: active
+run_id: 6f7e1c88ae1e492faf04ea94916546a5
+run_name: welcoming-crow-922
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1768237890310
+status: 3
+tags: []
+user_id: root

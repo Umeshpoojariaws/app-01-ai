@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/382474715181360815/03193b74c8ad4f13912cdb4ed8cdbdc4/artifacts
+end_time: 1768237461478
+entry_point_name: ''
+experiment_id: '382474715181360815'
+lifecycle_stage: active
+run_id: 03193b74c8ad4f13912cdb4ed8cdbdc4
+run_name: defiant-stork-2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1768237459684
+status: 3
+tags: []
+user_id: root

@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/382474715181360815/7dd08d7b7cae4fb3acc0ec4f9b0fe948/artifacts
+end_time: 1768239459774
+entry_point_name: ''
+experiment_id: '382474715181360815'
+lifecycle_stage: active
+run_id: 7dd08d7b7cae4fb3acc0ec4f9b0fe948
+run_name: kindly-doe-391
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1768239457652
+status: 3
+tags: []
+user_id: root

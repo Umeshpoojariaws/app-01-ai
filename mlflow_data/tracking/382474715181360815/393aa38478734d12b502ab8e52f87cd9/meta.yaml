@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/382474715181360815/393aa38478734d12b502ab8e52f87cd9/artifacts
+end_time: 1768234678576
+entry_point_name: ''
+experiment_id: '382474715181360815'
+lifecycle_stage: active
+run_id: 393aa38478734d12b502ab8e52f87cd9
+run_name: wise-fish-784
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1768234676814
+status: 3
+tags: []
+user_id: root

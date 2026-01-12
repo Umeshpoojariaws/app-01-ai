@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/382474715181360815/9c16f3a1c5694ca68fbd64f45cebe942/artifacts
+end_time: 1768238588744
+entry_point_name: ''
+experiment_id: '382474715181360815'
+lifecycle_stage: active
+run_id: 9c16f3a1c5694ca68fbd64f45cebe942
+run_name: casual-fly-643
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1768238587000
+status: 3
+tags: []
+user_id: root

@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/382474715181360815/56b2ecaa184641cbafa07d802b90e5c4/artifacts
+end_time: 1768236749134
+entry_point_name: ''
+experiment_id: '382474715181360815'
+lifecycle_stage: active
+run_id: 56b2ecaa184641cbafa07d802b90e5c4
+run_name: agreeable-shad-954
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1768236747412
+status: 3
+tags: []
+user_id: root

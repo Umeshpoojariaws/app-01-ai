@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/382474715181360815/1e0c509a56fe45ff9c9598af4d4b5c02/artifacts
+end_time: 1768239188194
+entry_point_name: ''
+experiment_id: '382474715181360815'
+lifecycle_stage: active
+run_id: 1e0c509a56fe45ff9c9598af4d4b5c02
+run_name: upset-whale-537
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1768239186239
+status: 3
+tags: []
+user_id: root

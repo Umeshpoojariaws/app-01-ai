@@ -1,0 +1,15 @@
+creation_timestamp: 1768237826962
+current_stage: None
+deployment_job_state: null
+description: ''
+last_updated_timestamp: 1768237826962
+model_id: m-2923983dfb12458db90509e448adba2b
+name: weather-forecaster
+run_id: 5a7310882bed4bf2ac8a578757f35568
+run_link: ''
+source: models:/m-2923983dfb12458db90509e448adba2b
+status: READY
+status_message: null
+storage_location: mlflow-artifacts:/382474715181360815/models/m-2923983dfb12458db90509e448adba2b/artifacts
+user_id: null
+version: 8

@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/382474715181360815/4a4f8d5404dd41329d119fe320a7a874/artifacts
+end_time: 1768240118899
+entry_point_name: ''
+experiment_id: '382474715181360815'
+lifecycle_stage: active
+run_id: 4a4f8d5404dd41329d119fe320a7a874
+run_name: rebellious-slug-400
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1768240116857
+status: 3
+tags: []
+user_id: root

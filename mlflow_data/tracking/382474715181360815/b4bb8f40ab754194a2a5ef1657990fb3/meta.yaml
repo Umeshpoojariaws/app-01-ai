@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/382474715181360815/b4bb8f40ab754194a2a5ef1657990fb3/artifacts
+end_time: 1768239294247
+entry_point_name: ''
+experiment_id: '382474715181360815'
+lifecycle_stage: active
+run_id: b4bb8f40ab754194a2a5ef1657990fb3
+run_name: redolent-zebra-981
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1768239292278
+status: 3
+tags: []
+user_id: root

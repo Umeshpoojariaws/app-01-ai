@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/382474715181360815/4eecaac4f63c42ef93f69e3f5438cd1a/artifacts
+end_time: 1768239019439
+entry_point_name: ''
+experiment_id: '382474715181360815'
+lifecycle_stage: active
+run_id: 4eecaac4f63c42ef93f69e3f5438cd1a
+run_name: big-sow-811
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1768239017412
+status: 3
+tags: []
+user_id: root

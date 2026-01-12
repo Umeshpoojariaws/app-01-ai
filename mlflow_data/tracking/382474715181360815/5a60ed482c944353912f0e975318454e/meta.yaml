@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/382474715181360815/5a60ed482c944353912f0e975318454e/artifacts
+end_time: 1768238874124
+entry_point_name: ''
+experiment_id: '382474715181360815'
+lifecycle_stage: active
+run_id: 5a60ed482c944353912f0e975318454e
+run_name: indecisive-crow-817
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1768238872157
+status: 3
+tags: []
+user_id: root

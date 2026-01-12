@@ -1,0 +1,30 @@
+artifact_path: mlflow-artifacts:/382474715181360815/models/m-8d5b58a7f4fe49a0807ef85bed25f05b/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.9.25
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+is_signature_from_type_hint: false
+mlflow_version: 3.1.4
+model_id: m-8d5b58a7f4fe49a0807ef85bed25f05b
+model_size_bytes: 66455
+model_uuid: m-8d5b58a7f4fe49a0807ef85bed25f05b
+prompts: null
+run_id: 4a4f8d5404dd41329d119fe320a7a874
+signature:
+  inputs: '[{"type": "long", "name": "today_temp", "required": true}, {"type": "long",
+    "name": "humidity", "required": true}, {"type": "long", "name": "wind_speed",
+    "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2026-01-12 17:48:37.120494'
