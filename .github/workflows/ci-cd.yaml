@@ -76,12 +76,12 @@ jobs:
       uses: hashicorp/setup-terraform@v2
 
     - name: Terraform Init
-      run: terraform -chdir=terraform init -backend-config="bucket=umesh-terraform-backend"
+      run: terraform -chdir=infra-01-ai/terraform init -backend-config="bucket=umesh-terraform-backend"
 
     - name: Get Terraform Outputs
       id: outputs
+      working-directory: ./infra-01-ai/terraform
       run: |
-        cd terraform
         echo "db_connection_name=$(terraform output -raw mlflow_db_instance_connection_name)" >> $GITHUB_OUTPUT
         echo "artifacts_bucket=$(terraform output -raw mlflow_artifacts_bucket)" >> $GITHUB_OUTPUT
 
