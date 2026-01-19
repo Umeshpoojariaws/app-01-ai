@@ -75,7 +75,7 @@ jobs:
     - name: Get Terraform Outputs
       id: outputs
       run: |
-        cd infra-01-ai/terraform
+        cd ./terraform
         echo "db_connection_name=$(terraform output -raw mlflow_db_instance_connection_name)" >> $GITHUB_OUTPUT
         echo "artifacts_bucket=$(terraform output -raw mlflow_artifacts_bucket)" >> $GITHUB_OUTPUT
 
