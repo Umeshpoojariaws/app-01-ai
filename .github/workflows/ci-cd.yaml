@@ -18,6 +18,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - name: List files in workspace
+      run: ls -R
+
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
       with:
@@ -31,17 +34,17 @@ jobs:
 
     - name: Build and Push Backend
       run: |
-        docker build -t ${{ env.DOCKER_REPO_URL }}/backend:latest ./backend
+        docker build -t ${{ env.DOCKER_REPO_URL }}/backend:latest ./app-01-ai/backend
         docker push ${{ env.DOCKER_REPO_URL }}/backend:latest
 
     - name: Build and Push Frontend
       run: |
-        docker build -t ${{ env.DOCKER_REPO_URL }}/frontend:latest ./frontend
+        docker build -t ${{ env.DOCKER_REPO_URL }}/frontend:latest ./app-01-ai/frontend
         docker push ${{ env.DOCKER_REPO_URL }}/frontend:latest
 
     - name: Build and Push Training
       run: |
-        docker build -t ${{ env.DOCKER_REPO_URL }}/training:latest ./training
+        docker build -t ${{ env.DOCKER_REPO_URL }}/training:latest ./app-01-ai/training
         docker push ${{ env.DOCKER_REPO_URL }}/training:latest
 
   deploy:
@@ -51,6 +54,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+
+    - name: List files in workspace
+      run: ls -R
 
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
@@ -70,12 +76,12 @@ jobs:
       uses: hashicorp/setup-terraform@v2
 
     - name: Terraform Init
-      run: terraform -chdir=./terraform init -backend-config="bucket=umesh-terraform-backend"
+      run: terraform -chdir=infra-01-ai/terraform init -backend-config="bucket=umesh-terraform-backend"
 
     - name: Get Terraform Outputs
       id: outputs
       run: |
-        cd ./terraform
+        cd infra-01-ai/terraform
         echo "db_connection_name=$(terraform output -raw mlflow_db_instance_connection_name)" >> $GITHUB_OUTPUT
         echo "artifacts_bucket=$(terraform output -raw mlflow_artifacts_bucket)" >> $GITHUB_OUTPUT
 
