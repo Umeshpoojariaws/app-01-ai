@@ -21,7 +21,7 @@ spec:
           "server",
           "--host", "0.0.0.0",
           "--port", "5000",
-          "--backend-store-uri", "postgresql://mlflow-user:mlflow-password@127.0.0.1:5432/mlflow-db",
+          "--backend-store-uri", "postgresql://mlflow-user:mlflow-password@35.224.101.194:5432/mlflow-db",
           "--artifacts-destination", "gs://MLFLOW_ARTIFACTS_BUCKET/"
         ]
         ports:
