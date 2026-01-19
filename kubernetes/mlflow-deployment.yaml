@@ -21,8 +21,10 @@ spec:
           "server",
           "--host", "0.0.0.0",
           "--port", "5000",
-          "--backend-store-uri", "postgresql://mlflow-user:mlflow-password@35.224.101.194:5432/mlflow-db",
-          "--artifacts-destination", "gs://MLFLOW_ARTIFACTS_BUCKET/"
+          # Using the +psycopg2 driver is highly recommended for MLflow + Postgres
+          "--backend-store-uri", "postgresql+psycopg2://mlflow-user:mlflow-password@127.0.0.1:5432/mlflow-db",
+          "--default-artifact-root", "gs://MLFLOW_ARTIFACTS_BUCKET/",
+          "--artifacts-destination", "gs://MLFLOW_ARTIFACTS_BUCKET/""
         ]
         ports:
         - containerPort: 5000
@@ -31,6 +33,8 @@ spec:
         args:
           - "--structured-logs"
           - "--port=5432"
-          - "MLFLOW_DB_INSTANCE_CONNECTION_NAME"
+          # Replace this with your actual Connection Name from GCP Console
+          - "devops-mlops-483223:us-central1:mlflow-db-instance" 
         securityContext:
           runAsNonRoot: true
+          
