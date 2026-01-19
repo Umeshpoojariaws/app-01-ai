@@ -24,7 +24,7 @@ spec:
           # Using the +psycopg2 driver is highly recommended for MLflow + Postgres
           "--backend-store-uri", "postgresql+psycopg2://mlflow-user:mlflow-password@127.0.0.1:5432/mlflow-db",
           "--default-artifact-root", "gs://MLFLOW_ARTIFACTS_BUCKET/",
-          "--artifacts-destination", "gs://MLFLOW_ARTIFACTS_BUCKET/""
+          "--artifacts-destination", "gs://MLFLOW_ARTIFACTS_BUCKET/"
         ]
         ports:
         - containerPort: 5000
@@ -37,4 +37,3 @@ spec:
           - "devops-mlops-483223:us-central1:mlflow-db-instance" 
         securityContext:
           runAsNonRoot: true
-          
