@@ -55,9 +55,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: List files in workspace
-      run: ls -R
-
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v1
       with:
@@ -72,29 +69,12 @@ jobs:
     - name: Get GKE credentials
       run: gcloud container clusters get-credentials main-cluster --region ${{ env.GCP_REGION }} --project ${{ env.GCP_PROJECT_ID }}
 
-    - name: Set up Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_wrapper: false # Prevents the '╷' formatting error
-
-    - name: Terraform Init
-      # Update path if terraform is inside app-01-ai/
-      run: terraform -chdir=terraform init -backend-config="bucket=umesh-terraform-backend"
-
-    - name: Get Terraform Outputs
-      id: tf_outputs
-      run: |
-        # Use -chdir here as well to stay consistent
-        echo "db_connection_name=$(terraform -chdir=terraform output -raw mlflow_db_instance_connection_name)" >> $GITHUB_OUTPUT
-        echo "artifacts_bucket=$(terraform -chdir=terraform output -raw mlflow_artifacts_bucket)" >> $GITHUB_OUTPUT
-
     - name: Substitute Placeholders
       run: |
-        # Use the ID 'tf_outputs' defined above
-        sed -i "s|DOCKER_REPO_URL|${{ env.DOCKER_REPO_URL }}|g" app-01-ai/kubernetes/*.yaml
-        sed -i "s|MLFLOW_DB_INSTANCE_CONNECTION_NAME|${{ steps.tf_outputs.outputs.db_connection_name }}|g" app-01-ai/kubernetes/mlflow-deployment.yaml
-        sed -i "s|MLFLOW_ARTIFACTS_BUCKET|${{ steps.tf_outputs.outputs.artifacts_bucket }}|g" app-01-ai/kubernetes/mlflow-deployment.yaml
-        sed -i "s|your-gcp-project-id|${{ env.GCP_PROJECT_ID }}|g" app-01-ai/kubernetes/mlflow-ksa.yaml
+        sed -i "s|DOCKER_REPO_URL|${{ env.DOCKER_REPO_URL }}|g" ./kubernetes/*.yaml
+        sed -i "s|MLFLOW_DB_INSTANCE_CONNECTION_NAME|${{ secrets.MLFLOW_DB_CONNECTION_NAME }}|g" ./kubernetes/mlflow-deployment.yaml
+        sed -i "s|MLFLOW_ARTIFACTS_BUCKET|${{ secrets.MLFLOW_ARTIFACTS_BUCKET }}|g" ./kubernetes/mlflow-deployment.yaml
+        sed -i "s|your-gcp-project-id|${{ env.GCP_PROJECT_ID }}|g" ./kubernetes/mlflow-ksa.yaml
 
     - name: Deploy
       run: |
