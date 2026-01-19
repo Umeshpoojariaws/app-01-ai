@@ -70,7 +70,7 @@ jobs:
       uses: hashicorp/setup-terraform@v2
 
     - name: Terraform Init
-      run: terraform -chdir=infra-01-ai/terraform init -backend-config="bucket=umesh-terraform-backend"
+      run: terraform -chdir=./terraform init -backend-config="bucket=umesh-terraform-backend"
 
     - name: Get Terraform Outputs
       id: outputs
