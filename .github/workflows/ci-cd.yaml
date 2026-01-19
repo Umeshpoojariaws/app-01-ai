@@ -87,10 +87,10 @@ jobs:
 
     - name: Substitute Placeholders
       run: |
-        sed -i "s|DOCKER_REPO_URL|${{ env.DOCKER_REPO_URL }}|g" app-01-ai/kubernetes/*.yaml
-        sed -i "s|MLFLOW_DB_INSTANCE_CONNECTION_NAME|${{ steps.outputs.outputs.db_connection_name }}|g" app-01-ai/kubernetes/mlflow-deployment.yaml
-        sed -i "s|MLFLOW_ARTIFACTS_BUCKET|${{ steps.outputs.outputs.artifacts_bucket }}|g" app-01-ai/kubernetes/mlflow-deployment.yaml
-        sed -i "s|your-gcp-project-id|${{ env.GCP_PROJECT_ID }}|g" app-01-ai/kubernetes/mlflow-ksa.yaml
+        sed -i "s|DOCKER_REPO_URL|${{ env.DOCKER_REPO_URL }}|g" kubernetes/*.yaml
+        sed -i "s|MLFLOW_DB_INSTANCE_CONNECTION_NAME|${{ steps.outputs.outputs.db_connection_name }}|g" kubernetes/mlflow-deployment.yaml
+        sed -i "s|MLFLOW_ARTIFACTS_BUCKET|${{ steps.outputs.outputs.artifacts_bucket }}|g" kubernetes/mlflow-deployment.yaml
+        sed -i "s|your-gcp-project-id|${{ env.GCP_PROJECT_ID }}|g" kubernetes/mlflow-ksa.yaml
 
     - name: Deploy
       run: |
