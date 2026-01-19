@@ -6,9 +6,9 @@ on:
       - main
 
 env:
-  GCP_PROJECT_ID: YOUR_GCP_PROJECT_ID
+  GCP_PROJECT_ID: devops-mlops-483223
   GCP_REGION: us-central1
-  DOCKER_REPO_URL: us-central1-docker.pkg.dev/YOUR_GCP_PROJECT_ID/app-images
+  DOCKER_REPO_URL: us-central1-docker.pkg.dev/devops-mlops-483223/app-images
 
 jobs:
   build-and-push:
