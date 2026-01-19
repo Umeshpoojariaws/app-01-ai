@@ -47,6 +47,10 @@ jobs:
         docker build -t ${{ env.DOCKER_REPO_URL }}/training:latest ./training
         docker push ${{ env.DOCKER_REPO_URL }}/training:latest
 
+    - name: Build and Push MLflow
+      run: |
+        docker buildx build --platform linux/amd64 -t ${{ env.DOCKER_REPO_URL }}/mlflow-gcp:latest --push ./mlflow
+
   deploy:
     name: Deploy to GKE
     runs-on: ubuntu-latest
