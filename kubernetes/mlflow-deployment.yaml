@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlflow
+  namespace: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mlflow
+  template:
+    metadata:
+      labels:
+        app: mlflow
+    spec:
+      serviceAccountName: mlflow-ksa
+      containers:
+      - name: mlflow
+        image: ghcr.io/mlflow/mlflow:latest
+        args: [
+          "server",
+          "--host", "0.0.0.0",
+          "--port", "5000",
+          "--backend-store-uri", "postgresql://mlflow-user:mlflow-password@127.0.0.1:5432/mlflow-db",
+          "--artifacts-destination", "gs://MLFLOW_ARTIFACTS_BUCKET/"
+        ]
+        ports:
+        - containerPort: 5000
+      - name: cloud-sql-proxy
+        image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.8.0
+        args:
+          - "--structured-logs"
+          - "--port=5432"
+          - "MLFLOW_DB_INSTANCE_CONNECTION_NAME"
+        securityContext:
+          runAsNonRoot: true

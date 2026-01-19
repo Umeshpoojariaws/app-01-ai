@@ -66,7 +66,26 @@ jobs:
     - name: Get GKE credentials
       run: gcloud container clusters get-credentials main-cluster --region $GCP_REGION
 
-    - name: Deploy
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Terraform Init
+      run: terraform -chdir=../infra-01-ai/terraform init -backend-config="bucket=umesh-terraform-backend"
+
+    - name: Get Terraform Outputs
+      id: outputs
+      run: |
+        cd ../infra-01-ai/terraform
+        echo "db_connection_name=$(terraform output -raw mlflow_db_instance_connection_name)" >> $GITHUB_OUTPUT
+        echo "artifacts_bucket=$(terraform output -raw mlflow_artifacts_bucket)" >> $GITHUB_OUTPUT
+
+    - name: Substitute Placeholders
       run: |
         sed -i "s|DOCKER_REPO_URL|$DOCKER_REPO_URL|g" ./kubernetes/*.yaml
+        sed -i "s|MLFLOW_DB_INSTANCE_CONNECTION_NAME|${{ steps.outputs.outputs.db_connection_name }}|g" ./kubernetes/mlflow-deployment.yaml
+        sed -i "s|MLFLOW_ARTIFACTS_BUCKET|${{ steps.outputs.outputs.artifacts_bucket }}|g" ./kubernetes/mlflow-deployment.yaml
+        sed -i "s|your-gcp-project-id|${{ env.GCP_PROJECT_ID }}|g" ./kubernetes/mlflow-ksa.yaml
+
+    - name: Deploy
+      run: |
         kubectl apply -f ./kubernetes/ --namespace dev

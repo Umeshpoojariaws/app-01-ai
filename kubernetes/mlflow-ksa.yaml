@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mlflow-ksa
+  namespace: dev
+  annotations:
+    iam.gke.io/gcp-service-account: mlflow-sa@your-gcp-project-id.iam.gserviceaccount.com
