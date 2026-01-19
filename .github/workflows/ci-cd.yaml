@@ -31,17 +31,17 @@ jobs:
 
     - name: Build and Push Backend
       run: |
-        docker build -t ${{ env.DOCKER_REPO_URL }}/backend:latest ./app-01-ai/backend
+        docker build -t ${{ env.DOCKER_REPO_URL }}/backend:latest ./backend
         docker push ${{ env.DOCKER_REPO_URL }}/backend:latest
 
     - name: Build and Push Frontend
       run: |
-        docker build -t ${{ env.DOCKER_REPO_URL }}/frontend:latest ./app-01-ai/frontend
+        docker build -t ${{ env.DOCKER_REPO_URL }}/frontend:latest ./frontend
         docker push ${{ env.DOCKER_REPO_URL }}/frontend:latest
 
     - name: Build and Push Training
       run: |
-        docker build -t ${{ env.DOCKER_REPO_URL }}/training:latest ./app-01-ai/training
+        docker build -t ${{ env.DOCKER_REPO_URL }}/training:latest ./training
         docker push ${{ env.DOCKER_REPO_URL }}/training:latest
 
   deploy:
