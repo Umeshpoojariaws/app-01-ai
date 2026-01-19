@@ -1,0 +1,10 @@
+artifact_location: mlflow-artifacts:/382474715181360815/models/m-b4319556b6ee42b5b5f4ecff736b5afa/artifacts
+creation_timestamp: 1768279356239
+experiment_id: '382474715181360815'
+last_updated_timestamp: 1768279357560
+model_id: m-b4319556b6ee42b5b5f4ecff736b5afa
+model_type: ''
+name: weather-forecast-model
+source_run_id: 785a1fdd5e414cd49bec41de5bc93ce1
+status: 2
+status_message: null

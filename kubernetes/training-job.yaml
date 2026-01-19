@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: training
+  namespace: dev
+spec:
+  template:
+    spec:
+      containers:
+      - name: training
+        image: DOCKER_REPO_URL/training:latest
+        env:
+        - name: MLFLOW_TRACKING_URI
+          value: "http://mlflow.dev.svc.cluster.local:5000"
+      restartPolicy: Never
+  backoffLimit: 4

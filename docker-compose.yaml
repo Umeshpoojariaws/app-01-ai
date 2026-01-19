@@ -65,6 +65,56 @@ services:
     networks:
       - app-network
 
+  # ArgoCD is not typically run with Docker Compose. This is a minimal setup for demonstration or testing.
+  # To use it, you need a running Kubernetes cluster and a configured kubeconfig file mounted into the containers.
+  #
+  # To get the initial admin password, once the services are up, run:
+  # docker compose exec argocd-server argocd admin initial-password
+
+  redis:
+    image: redis:6.2-alpine
+    networks:
+      - app-network
+    platform: linux/arm64
+
+  argocd-repo-server:
+    image: quay.io/argoproj/argocd:latest
+    command: argocd-repo-server --redis redis:6379
+    networks:
+      - app-network
+    depends_on:
+      - redis
+    platform: linux/arm64
+    volumes:
+      # Mount your git credentials if needed, e.g.:
+      # - ~/.ssh:/home/argocd/.ssh:ro
+      - /tmp:/tmp # For temporary files used by repo-server
+
+  argocd-application-controller:
+    image: quay.io/argoproj/argocd:latest
+    command: argocd-application-controller --redis redis:6379
+    networks:
+      - app-network
+    depends_on:
+      - redis
+      - argocd-repo-server
+    platform: linux/arm64
+    volumes:
+      - ~/.kube/config:/home/argocd/.kube/config:ro # Mount kubeconfig to connect to a cluster
+
+  argocd-server:
+    image: quay.io/argoproj/argocd:latest
+    command: argocd-server --insecure --redis redis:6379 --staticassets /shared/app
+    ports:
+      - "8085:8080"
+    networks:
+      - app-network
+    depends_on:
+      - argocd-repo-server
+    platform: linux/arm64
+    volumes:
+      - ~/.kube/config:/home/argocd/.kube/config:ro # Mount kubeconfig
+
 networks:
   app-network:
     driver: bridge
