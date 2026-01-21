@@ -35,6 +35,8 @@ spec:
         # 2. FIXED: Removed single quotes around the asterisk
         - name: GUNICORN_CMD_ARGS
           value: "--forwarded-allow-ips=* --log-level=debug --access-logfile=-"
+        - name: MLFLOW_ENABLE_PROXY_FIX
+          value: "true"
         # 3. ADDED: Explicit env vars as a backup to CLI args
         - name: MLFLOW_HOST
           value: "0.0.0.0"
