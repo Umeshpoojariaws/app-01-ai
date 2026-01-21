@@ -16,17 +16,18 @@ spec:
       serviceAccountName: mlflow-ksa
       containers:
       - name: mlflow
-        image: DOCKER_REPO_URL/mlflow-gcp:latest
-        # 1. Ensure the command explicitly starts the server 
-        command: ["mlflow"] 
-        args: [
-          "server",
-          "--host", "0.0.0.0",
-          "--port", "5000",
-          "--backend-store-uri", "postgresql+psycopg2://mlflow-user:mlflow-password@127.0.0.1:5432/mlflow-db",
-          "--default-artifact-root", "gs://MLFLOW_ARTIFACTS_BUCKET/",
-          "--artifacts-destination", "gs://MLFLOW_ARTIFACTS_BUCKET/"
-        ]
+        image: DOCKER_REPO_URL/mlflow-gcp:latest # Keep your image
+        # OVERRIDE COMMAND TO INSTALL GUNICORN
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            pip install gunicorn && \
+            mlflow server \
+            --host 0.0.0.0 \
+            --port 5000 \
+            --backend-store-uri postgresql+psycopg2://mlflow-user:mlflow-password@127.0.0.1:5432/mlflow-db \
+            --default-artifact-root gs://MLFLOW_ARTIFACTS_BUCKET/ \
+            --artifacts-destination gs://MLFLOW_ARTIFACTS_BUCKET/
         ports:
         - containerPort: 5000
         env:
