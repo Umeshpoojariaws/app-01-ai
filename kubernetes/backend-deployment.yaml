@@ -20,4 +20,4 @@ spec:
         - containerPort: 8000
         env:
         - name: MLFLOW_TRACKING_URI
-          value: "http://mlflow.dev.svc.cluster.local:5000"
+          value: "http://mlflow:5000"
