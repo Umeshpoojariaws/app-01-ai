@@ -13,6 +13,7 @@ spec:
       labels:
         app: backend
     spec:
+      serviceAccountName: backend-ksa
       containers:
       - name: backend
         image: DOCKER_REPO_URL/backend:latest

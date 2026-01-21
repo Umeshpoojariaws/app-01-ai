@@ -10,8 +10,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Set the MLFLOW_TRACKING_URI environment variable
-os.environ['MLFLOW_TRACKING_URI'] = 'http://mlflow:5000'
+# The MLFLOW_TRACKING_URI will be injected by Kubernetes, so we remove the hardcoded value.
 
 app = FastAPI()
 model = None
