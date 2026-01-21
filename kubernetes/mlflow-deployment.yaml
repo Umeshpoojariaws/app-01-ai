@@ -34,7 +34,7 @@ spec:
         env:
         # 2. FIXED: Removed single quotes around the asterisk
         - name: GUNICORN_CMD_ARGS
-          value: "--forwarded-allow-ips=*"
+          value: "--forwarded-allow-ips=* --log-level=debug --access-logfile=-"
         # 3. ADDED: Explicit env vars as a backup to CLI args
         - name: MLFLOW_HOST
           value: "0.0.0.0"
