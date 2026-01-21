@@ -29,11 +29,21 @@ spec:
         ]
         ports:
         - containerPort: 5000
+        env:
+        - name: GUNICORN_CMD_ARGS
+          value: "--forwarded-allow-ips='*'"
+        envFrom:
+        - secretRef:
+            name: mlflow-db-credentials
         livenessProbe:
-          tcpSocket:
+          httpGet:
+            path: /health
             port: 5000
+            httpHeaders:
+            - name: Host
+              value: localhost
           initialDelaySeconds: 30
-          periodSeconds: 20
+          periodSeconds: 10
       - name: cloud-sql-proxy
         image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.8.0
         args:
