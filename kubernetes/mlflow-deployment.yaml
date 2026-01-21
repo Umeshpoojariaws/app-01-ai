@@ -17,6 +17,7 @@ spec:
       containers:
       - name: mlflow
         image: DOCKER_REPO_URL/mlflow-gcp:latest
+        command: ["mlflow"]
         args: [
           "server",
           "--host", "0.0.0.0",
