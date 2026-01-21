@@ -27,7 +27,7 @@ spec:
           - "--workers"
           - "4"
           - "--backend-store-uri"
-          - "postgresql+psycopg2://$(DB_USER):$(DB_PASS)@127.0.0.1:5432/mlflow-db"
+          - "postgresql+psycopg2://mlflow-user:mlflow-password@127.0.0.1:5432/mlflow-db"
           - "--default-artifact-root"
           - "gs://MLFLOW_ARTIFACTS_BUCKET/"
           - "--artifacts-destination"
