@@ -35,6 +35,7 @@ metadata:
   name: mlflow
   namespace: dev
 spec:
+  clusterIP: None
   selector:
     app: mlflow
   ports:
