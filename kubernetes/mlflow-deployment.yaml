@@ -21,37 +21,31 @@ spec:
         args:
           - "server"
           - "--host"
-          - "127.0.0.1"
+          - "0.0.0.0" # Listen on all interfaces
           - "--port"
           - "5000"
-          - "--backend-store-uri"
-          - "postgresql+psycopg2://mlflow-user:mlflow-password@127.0.0.1:5432/mlflow-db"
+          # --backend-store-uri is removed to default to file store
           - "--default-artifact-root"
-          - "gs://MLFLOW_ARTIFACTS_BUCKET/"
-          - "--artifacts-destination"
-          - "gs://MLFLOW_ARTIFACTS_BUCKET/"
+          - "/mlflow/data" # Use a path inside the container for artifacts
         ports:
         - containerPort: 5000
-        env:
-        - name: MLFLOW_ENABLE_PROXY_FIX
-          value: "true"
-        envFrom:
-        - secretRef:
-            name: mlflow-db-credentials
+        # env:
+        # - name: MLFLOW_ENABLE_PROXY_FIX
+        #   value: "true"
+        # envFrom:
+        # - secretRef:
+        #     name: mlflow-db-credentials
         livenessProbe:
           httpGet:
             path: /health
             port: 5000
-            httpHeaders:
-            - name: Host
-              value: localhost
-          initialDelaySeconds: 30
+          initialDelaySeconds: 15
           periodSeconds: 10
-      - name: cloud-sql-proxy
-        image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.8.0
-        args:
-          - "--structured-logs"
-          - "--port=5432"
-          - "devops-mlops-483223:us-central1:mlflow-db-instance"
-        securityContext:
-          runAsNonRoot: true
+      # - name: cloud-sql-proxy
+      #   image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.8.0
+      #   args:
+      #     - "--structured-logs"
+      #     - "--port=5432"
+      #     - "devops-mlops-483223:us-central1:mlflow-db-instance"
+      #   securityContext:
+      #     runAsNonRoot: true
