@@ -65,6 +65,10 @@ jobs:
 
     - name: Get GKE credentials
       run: gcloud container clusters get-credentials main-cluster --region ${{ env.GCP_REGION }} --project ${{ env.GCP_PROJECT_ID }}
+    
+    - name: Substitute Image URL in Kubernetes Manifests
+      run: |
+        find ./kubernetes -type f -name "*.yaml" -exec sed -i "s|DOCKER_REPO_URL|${{ env.IMAGE_REPO_URL }}|g" {} +
 
     - name: Deploy to GKE
       run: |
