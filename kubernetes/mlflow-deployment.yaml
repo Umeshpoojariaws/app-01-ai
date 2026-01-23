@@ -1,8 +1,67 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: mlflow
+#   namespace: dev
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: mlflow
+#   template:
+#     metadata:
+#       labels:
+#         app: mlflow
+#     spec:
+#       serviceAccountName: mlflow-ksa
+#       containers:
+#       - name: mlflow
+#         # ensure you push the new image built from the Dockerfile above
+#         image: DOCKER_REPO_URL/mlflow-gcp:latest
+#         imagePullPolicy: Always  # Important: Force K8s to pull the new image
+        
+#         # We can remove 'command' because ENTRYPOINT is now set in Dockerfile
+#         # We can keep 'args' to override the CMD from Dockerfile if specific runtime configs are needed
+#         args:
+#           - "--bind=0.0.0.0:5000"
+#           - "--workers=2"
+#           - "mlflow.server:app"
+          
+#         ports:
+#         - containerPort: 5000
+#         env:
+#         - name: MLFLOW_DEFAULT_ARTIFACT_ROOT
+#           value: "/mlflow/data"
+#         # Add backend store URI if using postgres
+#         # - name: MLFLOW_BACKEND_STORE_URI
+#         #   value: "postgresql://user:password@host:5432/mlflow"
+#         livenessProbe:
+#           httpGet:
+#             path: /health
+#             port: 5000
+#           initialDelaySeconds: 15
+#           periodSeconds: 10
+
+
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mlflow-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi  # Recommended starting size for MLflow metadata
+  storageClassName: standard-rwo # GKE default for balanced persistent disks
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mlflow
-  namespace: dev
+  labels:
+    app: mlflow
 spec:
   replicas: 1
   selector:
@@ -13,31 +72,27 @@ spec:
       labels:
         app: mlflow
     spec:
-      serviceAccountName: mlflow-ksa
       containers:
       - name: mlflow
-        # ensure you push the new image built from the Dockerfile above
-        image: us-central1-docker.pkg.dev/devops-mlops-483223/ml-repo/mlflow-gcp:v1 
-        imagePullPolicy: Always  # Important: Force K8s to pull the new image
-        
-        # We can remove 'command' because ENTRYPOINT is now set in Dockerfile
-        # We can keep 'args' to override the CMD from Dockerfile if specific runtime configs are needed
-        args:
-          - "--bind=0.0.0.0:5000"
-          - "--workers=2"
-          - "mlflow.server:app"
-          
+        image: ghcr.io/mlflow/mlflow:latest
         ports:
         - containerPort: 5000
         env:
-        - name: MLFLOW_DEFAULT_ARTIFACT_ROOT
-          value: "/mlflow/data"
-        # Add backend store URI if using postgres
-        # - name: MLFLOW_BACKEND_STORE_URI
-        #   value: "postgresql://user:password@host:5432/mlflow"
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 5000
-          initialDelaySeconds: 15
-          periodSeconds: 10
+        - name: MLFLOW_ALLOWED_HOSTS
+          value: "*"
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            mlflow server \
+            --host 0.0.0.0 \
+            --port 5000 \
+            --artifacts-destination /mlflow/artifacts \
+            --backend-store-uri /mlflow/tracking \
+            --allowed-hosts '*'
+        volumeMounts:
+        - name: mlflow-data
+          mountPath: /mlflow
+      volumes:
+      - name: mlflow-data
+        persistentVolumeClaim:
+          claimName: mlflow-pvc
