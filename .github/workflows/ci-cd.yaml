@@ -72,4 +72,7 @@ jobs:
 
     - name: Deploy to GKE
       run: |
-        kubectl apply -f kubernetes/ 
+        # Delete the previous training job to avoid immutable field error
+        # The "|| true" part ensures the workflow doesn't fail if the job doesn't exist yet
+        kubectl delete job training --ignore-not-found=true
+        kubectl apply -f kubernetes/
