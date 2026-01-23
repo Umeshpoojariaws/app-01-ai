@@ -23,7 +23,7 @@ jobs:
       uses: actions/checkout@v3
 
     - id: 'auth'
-      uses: 'google-github-actions/auth@v2' # or v1
+      uses: 'google-github-actions/auth@v2' # or latest
       with:
         # You must explicitly map the secret here
         credentials_json: '${{ secrets.GCP_SA_KEY }}'
@@ -39,10 +39,10 @@ jobs:
 
     - name: Build and Push Images
       run: |
-        docker buildx build --platform linux/amd64 -t ${{ env.IMAGE_REPO_URL }}/mlflow-gcp:v1 --push ./mlflow
-        docker buildx build --platform linux/amd64 -t ${{ env.IMAGE_REPO_URL }}/training:v1 --push ./training
-        docker buildx build --platform linux/amd64 -t ${{ env.IMAGE_REPO_URL }}/backend:v1 --push ./backend
-        docker buildx build --platform linux/amd64 -t ${{ env.IMAGE_REPO_URL }}/frontend:v1 --push ./frontend
+        docker buildx build --platform linux/amd64 -t ${{ env.IMAGE_REPO_URL }}/mlflow-gcp:latest --push ./mlflow
+        docker buildx build --platform linux/amd64 -t ${{ env.IMAGE_REPO_URL }}/training:latest --push ./training
+        docker buildx build --platform linux/amd64 -t ${{ env.IMAGE_REPO_URL }}/backend:latest --push ./backend
+        docker buildx build --platform linux/amd64 -t ${{ env.IMAGE_REPO_URL }}/frontend:latest --push ./frontend
 
   deploy:
     name: Deploy to GKE
@@ -53,7 +53,7 @@ jobs:
       uses: actions/checkout@v3
 
     - id: 'auth'
-      uses: 'google-github-actions/auth@v2' # or v1
+      uses: 'google-github-actions/auth@v2' # or latest
       with:
         credentials_json: '${{ secrets.GCP_SA_KEY }}'
 
