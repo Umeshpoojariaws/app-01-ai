@@ -24,6 +24,8 @@ spec:
           - "0.0.0.0" # Listen on all interfaces
           - "--port"
           - "5000"
+          - "--app-name"
+          - "gunicorn"
           # --backend-store-uri is removed to default to file store
           - "--default-artifact-root"
           - "/mlflow/data" # Use a path inside the container for artifacts
