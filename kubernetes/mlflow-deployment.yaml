@@ -88,6 +88,7 @@ spec:
             --port 5000 \
             --artifacts-destination /mlflow/artifacts \
             --backend-store-uri /mlflow/tracking
+            --allowed-hosts '*'
         volumeMounts:
         - name: mlflow-data
           mountPath: /mlflow
