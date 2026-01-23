@@ -16,38 +16,20 @@ spec:
       serviceAccountName: mlflow-ksa
       containers:
       - name: mlflow
-        image: DOCKER_REPO_URL/mlflow-gcp:latest # Keep your image
-        command: ["mlflow"]
+        image: us-central1-docker.pkg.dev/devops-mlops-483223/ml-repo/mlflow-gcp:v1 # Hardcoded image path
+        command: ["gunicorn"]
         args:
-          - "server"
-          - "--host"
-          - "0.0.0.0" # Listen on all interfaces
-          - "--port"
-          - "5000"
-          - "--app-name"
-          - "gunicorn"
-          # --backend-store-uri is removed to default to file store
-          - "--default-artifact-root"
-          - "/mlflow/data" # Use a path inside the container for artifacts
+          - "--bind=0.0.0.0:5000"
+          - "--workers=2"
+          - "mlflow.server:app"
         ports:
         - containerPort: 5000
-        # env:
-        # - name: MLFLOW_ENABLE_PROXY_FIX
-        #   value: "true"
-        # envFrom:
-        # - secretRef:
-        #     name: mlflow-db-credentials
+        env:
+        - name: MLFLOW_DEFAULT_ARTIFACT_ROOT
+          value: "/mlflow/data"
         livenessProbe:
           httpGet:
             path: /health
             port: 5000
           initialDelaySeconds: 15
           periodSeconds: 10
-      # - name: cloud-sql-proxy
-      #   image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.8.0
-      #   args:
-      #     - "--structured-logs"
-      #     - "--port=5432"
-      #     - "devops-mlops-483223:us-central1:mlflow-db-instance"
-      #   securityContext:
-      #     runAsNonRoot: true
