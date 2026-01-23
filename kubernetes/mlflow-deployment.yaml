@@ -78,8 +78,8 @@ spec:
         ports:
         - containerPort: 5000
         env:
-        - name: MLFLOW_ALLOWED_HOSTS
-          value: "*"
+        - name: MLFLOW_ENABLE_PROXY_FIX
+          value: "true"
         command: ["/bin/sh", "-c"]
         args:
           - |
@@ -87,8 +87,7 @@ spec:
             --host 0.0.0.0 \
             --port 5000 \
             --artifacts-destination /mlflow/artifacts \
-            --backend-store-uri /mlflow/tracking \
-            --allowed-hosts '*'
+            --backend-store-uri /mlflow/tracking
         volumeMounts:
         - name: mlflow-data
           mountPath: /mlflow
