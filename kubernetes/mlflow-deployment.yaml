@@ -16,17 +16,25 @@ spec:
       serviceAccountName: mlflow-ksa
       containers:
       - name: mlflow
-        image: us-central1-docker.pkg.dev/devops-mlops-483223/ml-repo/mlflow-gcp:v1 # Hardcoded image path
-        command: ["gunicorn"]
+        # ensure you push the new image built from the Dockerfile above
+        image: us-central1-docker.pkg.dev/devops-mlops-483223/ml-repo/mlflow-gcp:v1 
+        imagePullPolicy: Always  # Important: Force K8s to pull the new image
+        
+        # We can remove 'command' because ENTRYPOINT is now set in Dockerfile
+        # We can keep 'args' to override the CMD from Dockerfile if specific runtime configs are needed
         args:
           - "--bind=0.0.0.0:5000"
           - "--workers=2"
           - "mlflow.server:app"
+          
         ports:
         - containerPort: 5000
         env:
         - name: MLFLOW_DEFAULT_ARTIFACT_ROOT
           value: "/mlflow/data"
+        # Add backend store URI if using postgres
+        # - name: MLFLOW_BACKEND_STORE_URI
+        #   value: "postgresql://user:password@host:5432/mlflow"
         livenessProbe:
           httpGet:
             path: /health

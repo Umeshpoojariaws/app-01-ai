@@ -1,12 +1,13 @@
-# This Dockerfile creates a custom MLflow image that includes the
-# PostgreSQL driver (psycopg2) and Gunicorn.
 FROM ghcr.io/mlflow/mlflow:latest
 
-# Install Python dependencies required for GKE deployment
-# - psycopg2-binary: For connecting to a PostgreSQL backend (if needed later)
-# - google-cloud-storage: For using GCS as an artifact store
-# - gunicorn: A production-grade WSGI server to run MLflow
+# Install dependencies
 RUN pip install --no-cache-dir psycopg2-binary google-cloud-storage gunicorn
 
-# # Copy the rest of the application code
-# COPY . .
+# Expose the port
+EXPOSE 5000
+
+# Explicitly set Entrypoint to gunicorn to override base image defaults
+ENTRYPOINT ["gunicorn"]
+
+# Set default arguments (can be overridden by K8s args if needed)
+CMD ["--bind=0.0.0.0:5000", "--workers=2", "mlflow.server:app"]
